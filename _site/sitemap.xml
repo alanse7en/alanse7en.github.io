@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>http://localhost:4000</loc>
+        <loc>http://alanse7en.github.io</loc>
     </url>
     
     
     <url>
-        <loc>http://localhost:4000/404.html</loc>
+        <loc>http://alanse7en.github.io/404.html</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/about/</loc>
+        <loc>http://alanse7en.github.io/about/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/feed.xml</loc>
+        <loc>http://alanse7en.github.io/feed.xml</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/index.html</loc>
+        <loc>http://alanse7en.github.io/index.html</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/posts/</loc>
+        <loc>http://alanse7en.github.io/posts/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/sitemap.xml</loc>
+        <loc>http://alanse7en.github.io/sitemap.xml</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/tags/</loc>
+        <loc>http://alanse7en.github.io/tags/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/theme-setup/</loc>
+        <loc>http://alanse7en.github.io/theme-setup/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/page2/index.html</loc>
+        <loc>http://alanse7en.github.io/page2/index.html</loc>
     </url>
     
 
     
     <url>
-        <loc>http://localhost:4000/xie-xie/</loc>
+        <loc>http://alanse7en.github.io/xie-xie/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/background-image/</loc>
+        <loc>http://alanse7en.github.io/background-image/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/code-highlighting-post/</loc>
+        <loc>http://alanse7en.github.io/code-highlighting-post/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/sample-link-post/</loc>
+        <loc>http://alanse7en.github.io/sample-link-post/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/video-post/</loc>
+        <loc>http://alanse7en.github.io/video-post/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/readability-feature-post/</loc>
+        <loc>http://alanse7en.github.io/readability-feature-post/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/sample-post-images/</loc>
+        <loc>http://alanse7en.github.io/sample-post-images/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/readability-post/</loc>
+        <loc>http://alanse7en.github.io/readability-post/</loc>
     </url>
     
     <url>
-        <loc>http://localhost:4000/sample-post/</loc>
+        <loc>http://alanse7en.github.io/sample-post/</loc>
     </url>
     
 </urlset>
