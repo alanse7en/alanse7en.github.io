@@ -3,8 +3,8 @@ layout: post
 title: "clustering by fast search and find of density peaks"
 modified: 2014-10-21 15:50:20 +0800
 tags: [machine learning,matlab,C++]
-image: 
-	background: triangular.png
+image:
+  background: triangular.png 
 comments: true 
 share: true
 ---
