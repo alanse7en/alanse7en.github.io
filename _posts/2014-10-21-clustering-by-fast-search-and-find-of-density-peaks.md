@@ -9,6 +9,7 @@ comments: true
 share: true
 ---
 
+
 最近玩了一下今年Science上发表的一篇关于聚类的文章:Clustering by fast search and find of density peaks。算法的过程并不复杂，但确实十分聪明。
 
 算法的输入只需要一个distance的矩阵，第i行第j列的元素就是第i个数据和第j个数据的距离。
@@ -40,7 +41,7 @@ share: true
 在作者给出的matlab版本的代码里，在计算完了密度和delta之后，画出了横轴为密度，纵轴为delta的decision graph，然后可以认为选定一个点来决定最小的delta值和密度值，在dc选择合理的情况下，通常可以很轻松地作出这个决定。如下图：
 
 <figure>
-	<img src="/image/decision_graph.jpg" alt="">
+	<img src="/image/decision_graph.jpg" alt="" />
 	<figcaption>Decision graph</figcaption>
 </figure>
 
@@ -60,4 +61,4 @@ share: true
 
 再另外，作者主页提供的matlab代码运行效率实在太慢，我自己实现了一个稍微快一些的版本，可以看这里：
 
-https://github.com/alanse7en/cluster_dp
+<a href = "https://github.com/alanse7en/cluster_dp">点我</a>
