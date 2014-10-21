@@ -3,13 +3,12 @@ layout: post
 title: "clustering by fast search and find of density peaks"
 modified: 2014-10-21 15:50:20 +0800
 tags: [machine learning,matlab,C++]
-image: triangular.png
-  feature: 
-  credit: 
-  creditlink: 
+image: 
+	background: triangular.png
 comments: true 
 share: true
 ---
+
 最近玩了一下今年Science上发表的一篇关于聚类的文章:Clustering by fast search and find of density peaks。算法的过程并不复杂，但确实十分聪明。
 
 算法的输入只需要一个distance的矩阵，第i行第j列的元素就是第i个数据和第j个数据的距离。
