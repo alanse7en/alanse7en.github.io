@@ -19,16 +19,16 @@ owner:
   facebook:       
   github:         
   stackexchange:  
-  linkedin:       https://cn.linkedin.com/in/雪松-邓-212840aa
-  instagram:      https://instagram.com/alanse7en/
+  linkedin:       雪松-邓-212840aa
+  instagram:      alanse7en/
   flickr:         
   tumblr:         
   # For Google Authorship https://plus.google.com/authorship
   # google plus id, include the '+', eg +mmistakes
-  google_plus:    +yourid
+  google_plus:
 
 # Background image to be tiled on all pages
-background: abstract-15.jpg
+background:
 # Analytics and webmaster tools stuff goes here
 google_analytics:   
 google_verify:      
