@@ -41,8 +41,6 @@ $$
 \delta_i = \min_{j : \rho_j > \rho_i} d_i_j
 $$
 
-<img src="http://www.sciweavers.org/tex2img.php?eq=%20%5Cdelta_i%20%3D%20%20%5Cmin_%7Bj%20%3A%20%5Crho_j%20%3E%20%5Crho_i%7D%20d_i_j%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt=" \delta_i =  \min_{j : \rho_j > \rho_i} d_i_j " width="104" height="32" />
-
 这个值越高意味着这个数据越有可能是聚类的中心，因为delta值是这个数据与比自己的密度更大的数据之间最小的距离，这个距离越大，说明这个数据远离了其他比自己密度大的数据，是自己的邻域里的局部最大，也就是题目中说的density peaks。
 
 当然在保证这个数据有很大的delta值的情况下，也需要保证这个数据有很高的density，否则就意味着这个数据是一个噪声，因为它既远离了其他的高密度区域，自己也不处于一个高密度区域（很小的density值）。
