@@ -15,8 +15,6 @@ share: true
 
 文章首先定义了一个数据的密度(density)：
 
-$f(x)=\lambda*x$
-
 <img src="http://www.sciweavers.org/tex2img.php?eq=%20%5Crho%20_i%3D%20%5Csum_j%20%20%20%5Cchi%20%28d_i_j-d_c%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt=" \rho _i= \sum_j   \chi (d_i_j-d_c)" width="150" height="42" />
 
 其中：
