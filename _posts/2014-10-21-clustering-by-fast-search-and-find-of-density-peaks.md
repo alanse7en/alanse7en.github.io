@@ -15,21 +15,31 @@ share: true
 
 文章首先定义了一个数据的密度(density)：
 
-<img src="http://www.sciweavers.org/tex2img.php?eq=%20%5Crho%20_i%3D%20%5Csum_j%20%20%20%5Cchi%20%28d_i_j-d_c%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt=" \rho _i= \sum_j   \chi (d_i_j-d_c)" width="150" height="42" />
+$$
+\rho_i= \sum_j \chi (d_i_j-d_c)
+$$
 
 其中：
 
-<img src="http://www.sciweavers.org/tex2img.php?eq=%5Cchi%28x%29%20%3D%20%20%5Cbegin%7Bcases%7D1%20%26%20x%20%3C%200%5C%5C0%20%26%20else%5Cend%7Bcases%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt="\chi(x) =  \begin{cases}1 & x < 0\\0 & else\end{cases} " width="144" height="47" />
+$$
+\chi(x) = \begin{cases}1 & x < 0\\0 & else\end{cases}
+$$
 
 在作者的给出的代码里对密度的定义给出了一个更合理的公式：
 
-<img src="http://www.sciweavers.org/tex2img.php?eq=%5Crho_i%20%3D%20%5Csum_j%20exp%28-%20%28%20%5Cfrac%7Bd_i_j%7D%7Bdc%7D%20%29%5E%7B2%7D%20%29%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt="\rho_i = \sum_j exp(- ( \frac{d_i_j}{dc} )^{2} ) " width="172" height="53" />
+$$
+\rho_i = \sum_j exp(- ( \frac{d_i_j}{dc} )^{2} )
+$$
 
 简单的来说，这两个公式都反映了一个数据其一个小邻域内的其他数据的多少或者稠密程度，也就估计出来了这个数据的一个局部的密度。
 
 值得一提的是dc这个值，对算法的影响还是比较大，文章里给出的建议是升序排列distance，然后取1%到2%的那个distance作为dc。
 
 然后需要计算delta:
+
+$$
+\delta_i = \min_{j : \rho_j > \rho_i} d_i_j
+$$
 
 <img src="http://www.sciweavers.org/tex2img.php?eq=%20%5Cdelta_i%20%3D%20%20%5Cmin_%7Bj%20%3A%20%5Crho_j%20%3E%20%5Crho_i%7D%20d_i_j%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt=" \delta_i =  \min_{j : \rho_j > \rho_i} d_i_j " width="104" height="32" />
 
