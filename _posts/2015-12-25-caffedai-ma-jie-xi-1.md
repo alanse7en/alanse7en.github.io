@@ -4,7 +4,7 @@ title: "Caffe代码解析(1)"
 modified: 2015-12-25 16:20:45 +0800
 tags: [Caffe,Deep Learning,C++]
 image:
-  feature: abstract-17.jpg
+  feature: abstract-17.png
   credit: 
   creditlink: http://www.rafaelgrossmann.com/deep-really-deep-learning/
 comments: true
