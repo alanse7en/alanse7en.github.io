@@ -11,7 +11,7 @@ comments: true
 share: true
 ---
 
-使用Caffe做各种实验也有一段时间了，除了Caffe支持的各种layer之外，在自己的使用中开始遇到一些需要自己定义的网络，也有一些新的模型，比如2015ImageNet的冠军里面的shortcut结构，都需要实现新的layer。为了去改造Caffe，首先打算学习一下Caffe的代码，这一些列的博客将记录一下这个学习的过程。
+使用Caffe做各种实验也有一段时间了，除了Caffe支持的各种layer之外，在自己的使用中开始遇到一些需要自己定义的网络，也有一些新的模型，比如2015ImageNet的冠军里面的shortcut结构，都需要实现新的layer。为了去改造Caffe，首先打算学习一下Caffe的代码，接下来一系列的博客将记录一下这个学习的过程。
 
 Caffe主要包含了4个大类:`Solver`, `Net`, `Layer`, `Blob`。
 
