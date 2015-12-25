@@ -27,6 +27,11 @@ owner:
   # google plus id, include the '+', eg +mmistakes
   google_plus:
 
+
+image:
+  feature: abstract-17.jpg
+  credit: 
+  creditlink: http://www.rafaelgrossmann.com/deep-really-deep-learning/
 # Background image to be tiled on all pages
 background: triangular.png
 # Analytics and webmaster tools stuff goes here
