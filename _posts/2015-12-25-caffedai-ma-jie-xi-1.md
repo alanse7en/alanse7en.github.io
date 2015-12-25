@@ -19,7 +19,7 @@ Caffe主要包含了4个大类:`Solver`, `Net`, `Layer`, `Blob`。
 类似地Layer这个类派生出了很多子类，这些子类实现了Data的读取和Convolution, Pooling, InnerProduct等各种功能的layer。
 Blob则是Caffe对数据的封装，在整个网络的计算中，不管是数据还是网络的参数和梯度都是这个类的对象，均为num*channel*width*height形式的数据。可以看出Caffe的整个代码结构是很清楚的，也很方便添加新的优化方法和自定义功能的layer。
 
-除了清晰的代码结构，让Caffe变得易用更应该归功于Caffe使用了<a href = "https://developers.google.com/protocol-buffers/">`Google Protocol Buffer`</a>。`Google Protocol Buffer`是Google开发的一个用于serializing结构化数据的开源工具:
+除了清晰的代码结构，让Caffe变得易用更应该归功于<a href = "https://developers.google.com/protocol-buffers/">`Google Protocol Buffer`</a>的使用。`Google Protocol Buffer`是Google开发的一个用于serializing结构化数据的开源工具:
 
 > Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
