@@ -20,26 +20,9 @@ layer {
   type: "Data"
   top: "data"
   top: "label"
-  include {
-    phase: TRAIN
-  }
   data_param {
     source: "path/to/train_database"
     batch_size: 64
-    backend: LMDB
-  }
-}
-layer {
-  name: "data"
-  type: "Data"
-  top: "data"
-  top: "label"
-  include {
-    phase: TEST
-  }
-  data_param {
-    source: "path/to/test_database"
-    batch_size: 100
     backend: LMDB
   }
 }
@@ -48,70 +31,19 @@ layer {
   type: "Convolution"
   bottom: "data"
   top: "conv1"
-  param {
-    lr_mult: 1
-  }
-  param {
-    lr_mult: 2
-  }
   convolution_param {
     num_output: 20
     kernel_size: 5
     stride: 1
-    weight_filler {
-      type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-    }
-  }
-}
-layer {
-  name: "pool1"
-  type: "Pooling"
-  bottom: "conv1"
-  top: "pool1"
-  pooling_param {
-    pool: MAX
-    kernel_size: 2
-    stride: 2
   }
 }
 layer {
   name: "ip1"
   type: "InnerProduct"
-  bottom: "pool1"
+  bottom: "conv1"
   top: "ip1"
-  param {
-    lr_mult: 1
-  }
-  param {
-    lr_mult: 2
-  }
   inner_product_param {
     num_output: 500
-    weight_filler {
-      type: "xavier"
-    }
-    bias_filler {
-      type: "constant"
-    }
-  }
-}
-layer {
-  name: "relu1"
-  type: "ReLU"
-  bottom: "ip1"
-  top: "ip1"
-}
-layer {
-  name: "accuracy"
-  type: "Accuracy"
-  bottom: "ip1"
-  bottom: "label"
-  top: "accuracy"
-  include {
-    phase: TEST
   }
 }
 layer {
@@ -121,12 +53,12 @@ layer {
   bottom: "label"
   top: "loss"
 }
-
 {% endhighlight %}
+这个网络定义了一个`name`为`ExampleNet`的网络，这个网络的输入数据是`LMDB`数据，`batch_size`为64，包含了一个卷积层和一个全连接层，训练的`loss function`为`SoftmaxWithLoss`。通过这种简单的`key: value`描述方式，用户可以很方便的定义自己的网络，利用Caffe来训练和测试网络，验证自己的想法。
 
-本文将通过一个简单的例子来展示Caffe是如何使用`Google Protocol Buffer`来完成`Solver`和`Net`的定义。
+Caffe中定义了丰富的layer类型，每个类型都有对应的一些参数来描述这一个layer。为了说明的方便，接下来将通过一个简单的例子来展示Caffe是如何使用`Google Protocol Buffer`来完成`Solver`和`Net`的定义。
 
-首先我们需要了解`Google Protocol Buffer`定义data schema的方式，下面是官网上一个典型的AddressBook例子：
+首先我们需要了解`Google Protocol Buffer`定义data schema的方式，`Google Protocol Buffer`通过一种类似于C++的语言来定义数据结构，下面是官网上一个典型的AddressBook例子：
 
 {% highlight cpp %}
 package tutorial;
