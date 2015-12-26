@@ -13,7 +13,7 @@ share:
 
 在Caffe中定义一个网络是通过编辑一个prototxt文件来完成的，一个简单的网络定义文件如下：
 
-{% highlight cpp %}
+{% highlight cpp linenos %}
 name: "ExampleNet"
 layer {
   name: "data"
@@ -60,7 +60,7 @@ Caffe中定义了丰富的layer类型，每个类型都有对应的一些参数�
 
 首先我们需要了解`Google Protocol Buffer`定义data schema的方式，`Google Protocol Buffer`通过一种类似于C++的语言来定义数据结构，下面是官网上一个典型的AddressBook例子：
 
-{% highlight cpp %}
+{% highlight cpp linenos %}
 package tutorial;
 
 message Person {
