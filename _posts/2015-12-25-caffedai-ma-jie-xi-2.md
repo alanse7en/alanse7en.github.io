@@ -136,7 +136,7 @@ inline ::tutorial::Person_PhoneNumber* add_phone();
 
 每个类都有对应的`setter`和`getter`，因为`phone`是`repeated`类型的，所以还多了通过`index`来获取和改变某一个元素的`setter`和`getter`，`phone`还有一个获取数量的`phone_size`函数。
 
-官网上的tutorial是通过`bool ParseFromIstream(istream* input);`来从binary的数据文件里解析数据，为了更好地说明Caffe中读取数据的方式，我稍微修改了代码，使用了和`Caffe`一样的方式通过`TextFormat::Parse(ZeroCopyInputStream* input, Message* output);`来解析文本格式的数据。具体的代码如下：
+官网上的tutorial是通过`bool ParseFromIstream(istream* input);`来从binary的数据文件里解析数据，为了更好地说明Caffe中读取数据的方式，我稍微修改了代码，使用了和`Caffe`一样的方式通过`TextFormat::Parse`来解析文本格式的数据。具体的代码如下：
 
 {% highlight cpp lineos %}
 #include <iostream>
