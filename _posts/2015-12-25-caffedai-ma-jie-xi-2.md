@@ -7,8 +7,8 @@ image:
   feature: abstract-17.png
   credit: 
   creditlink: http://www.rafaelgrossmann.com/deep-really-deep-learning/ 
-comments: 
-share: 
+comments: true
+share: true
 ---
 
 在Caffe中定义一个网络是通过编辑一个prototxt文件来完成的，一个简单的网络定义文件如下：
