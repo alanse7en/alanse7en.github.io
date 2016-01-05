@@ -37,7 +37,7 @@ DEFINE_string(gpu, "",
 
 解析这些标志的代码在caffe.cpp中的`main()`中调用了/CAFFE_ROOT/src/common.cpp中的`GlobalInit(&argc, &argv)`函数：
 
-{% highlight cpp lineos%}
+{% highlight cpp linenos %}
 void GlobalInit(int* pargc, char*** pargv) {
   // Google flags.
   ::gflags::ParseCommandLineFlags(pargc, pargv, true);
