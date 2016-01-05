@@ -15,10 +15,10 @@ share: true
 
 首先，简单介绍一下Caffe的代码结构。Caffe主要包含了4个大类:
 
-* `Solver: An interface for classes that perform optimization on Nets`
-* `Net: Connects Layers together into a directed acyclic graph (DAG) specified by a NetParameter`
-* `Layer: An interface for the units of computation which can be composed into a Net`
-* `Blob: A wrapper around SyncedMemory holders serving as the basic computational unit through which Layers, Nets, and Solvers interact`
+* `Solver`: An interface for classes that perform optimization on Nets
+* `Net`: Connects Layers together into a directed acyclic graph (DAG) specified by a NetParameter
+* `Layer`: An interface for the units of computation which can be composed into a Net
+* `Blob`: A wrapper around SyncedMemory holders serving as the basic computational unit through which Layers, Nets, and Solvers interact
 
 其中`Solver`这个类实现了优化函数的封装，其中有一个`protected`的成员:`shared_ptr<Net<Dtype> > net_;`，这个成员是一个指向`Net`类型的智能指针（shared_ptr），`Solver`正是通过这个指针来和网络`Net`来交互并完成模型的优化。不同的子类分别实现了不同的优化方法：`SGDSolver`, `NesterovSolver`, `AdaGradSolver`, `RMSPropSolver`, `AdaDeltaSolver`和`AdamSolver`。具体每个Solver对应的优化方法参考：<a href = "http://caffe.berkeleyvision.org/tutorial/solver.htm">Caffe Solver Methods</a>。
 类似地`Layer`这个类派生出了很多子类，这些子类实现了Data的读取和Convolution, Pooling, InnerProduct等各种功能的layer。
