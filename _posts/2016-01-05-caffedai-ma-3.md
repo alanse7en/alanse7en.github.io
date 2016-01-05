@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Caffe代码(3)"
+title: "Caffe代码解析(3)"
 modified: 2016-01-05 16:31:39 +0800
 tags: [Caffe,C++,Deep Learning]
 image:
