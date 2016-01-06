@@ -208,3 +208,62 @@ return 0;
 上面的代码中涉及了很多`Solver`这个类的接口，这些内容都将在下一篇文章中进行具体的分析。
 
 ## `SolverParameter`的具体解析过程
+
+前面提到了`SolverParameter`是通过`ReadSolverParamsFromTextFileOrDie`来完成解析的，这个函数的实现在/CAFFE_ROOT/src/caffe/util/upgrade_proto.cpp里，我们来看一下具体的过程：
+
+{% highlight cpp linenos %}
+// Read parameters from a file into a SolverParameter proto message.
+void ReadSolverParamsFromTextFileOrDie(const string& param_file,
+                                       SolverParameter* param) {
+  CHECK(ReadProtoFromTextFile(param_file, param))
+      << "Failed to parse SolverParameter file: " << param_file;
+  UpgradeSolverAsNeeded(param_file, param);
+}
+{% endhighlight %}
+
+这里调用了先后调用了两个函数，首先是`ReadProtoFromTextFile`，这个函数的作用是从param_file这个路径去读取solver的定义，并将文件中的内容解析存到param这个指针指向的对象，具体的实现在/CAFFE_ROOT/src/caffe/util/io.cpp的开始：
+
+{% highlight cpp linenos %}
+bool ReadProtoFromTextFile(const char* filename, Message* proto) {
+  int fd = open(filename, O_RDONLY);
+  CHECK_NE(fd, -1) << "File not found: " << filename;
+  FileInputStream* input = new FileInputStream(fd);
+  bool success = google::protobuf::TextFormat::Parse(input, proto);
+  delete input;
+  close(fd);
+  return success;
+}
+{% endhighlight %}
+
+这段代码首先是打开了文件，并且读取到了一个`FileInputStream`的指针中，然后通过`protobuf`的`TextFormat::Parse`函数完成了解析。
+
+然后`UpgradeSolverAsNeeded`完成了新老版本caffe.proto的兼容处理：
+
+{% highlight cpp linenos %}
+// Check for deprecations and upgrade the SolverParameter as needed.
+bool UpgradeSolverAsNeeded(const string& param_file, SolverParameter* param) {
+  bool success = true;
+  // Try to upgrade old style solver_type enum fields into new string type
+  if (SolverNeedsTypeUpgrade(*param)) {
+    LOG(INFO) << "Attempting to upgrade input file specified using deprecated "
+              << "'solver_type' field (enum)': " << param_file;
+    if (!UpgradeSolverType(param)) {
+      success = false;
+      LOG(ERROR) << "Warning: had one or more problems upgrading "
+                 << "SolverType (see above).";
+    } else {
+      LOG(INFO) << "Successfully upgraded file specified using deprecated "
+                << "'solver_type' field (enum) to 'type' field (string).";
+      LOG(WARNING) << "Note that future Caffe releases will only support "
+                   << "'type' field (string) for a solver's type.";
+    }
+  }
+  return success;
+}
+{% endhighlight %}
+
+主要的问题就是在旧版本中`Solver`的type是enum类型，而新版本的变为了string。
+
+## 总结
+
+本文从主要分析了caffe.cpp中实现各种具体功能的函数的调用的机制，以及在Command Line中用户输入的各种参数是怎么解析的，以及最常用的train函数的具体代码。通过这些分析，我们对`Solver`类型的接口有了一个初步的认识和了解，在下一篇文章中，我们将去具体地分析`Solver`的实现。
