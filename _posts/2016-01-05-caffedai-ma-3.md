@@ -20,7 +20,7 @@ share: true
 * `train()`函数的具体实现
 * `SolverParameter`的具体解析过程
 
-## 1.Google Flags的使用
+## Google Flags的使用
 
 从<a href = "http://caffe.berkeleyvision.org/tutorial/interfaces.html">Caffe官网</a>中可以看到，caffe的Command Line Interfaces一共提供了四个功能：train/test/time/device_query，而Interfaces的输入除了这四种功能还可以输入诸如-solver/-weights/-snapshot/-gpu等参数。这些参数的解析是通过Google Flags这个工具来完成的。
 
@@ -50,7 +50,7 @@ void GlobalInit(int* pargc, char*** pargv) {
 
 第三行的函数就是Google Flags用来解析输入的参数的，前两个参数分别是指向`main()`的`argc`和`argv`的指针，第三个参数为`true`，表示在解析完所有的标志之后将这些标志从`argv`中清除，因此在解析完成之后，`argc`的值为2，`argv[0]`为main，`argv[1]`为train/test/time/device_query中的一个。
 
-## 2.Register Brew Function的宏的定义和使用
+## Register Brew Function的宏的定义和使用
 
 Caffe在Command Line Interfaces中一共提供了4种功能:train/test/time/device_query，分别对应着四个函数，这四个函数的调用是通过一个叫做`g_brew_map`的全局变量来完成的：
 
@@ -105,7 +105,7 @@ static BrewFunction GetBrewFunction(const caffe::string& name) {
 
 总结一下：`RegisterBrewFunction`这个宏在每一个实现主要功能的函数之后将这个函数的名字和其对应的函数指针添加到了`g_brew_map`中，然后在main函数中，通过`GetBrewFunction`得到了我们需要调用的那个函数的函数指针，并完成了调用。
 
-## 3.`train()`函数的具体实现
+## `train()`函数的具体实现
 
 接下来我们仔细地分析一下在`train()`的具体实现。
 
@@ -191,8 +191,20 @@ if (FLAGS_snapshot.size()) {
 }
 {% endhighlight %}
 
-最后，如果用户设置了要使用多个gpu，那么要声明一个`P2PSync`类型的对象，并通过这个对象来完成多gpu的计算，这一部分的代码，这一系列的文章会暂时先不涉及。而如果是只使用单个gpu，那么就通过`Solver`的`Solve()`开始具体的优化过程。在优化结束之后，函数将0值返回给main函数，整个train过程到这里也就结束了。
+最后，如果用户设置了要使用多个gpu，那么要声明一个`P2PSync`类型的对象，并通过这个对象来完成多gpu的计算，这一部分的代码，这一系列的文章会暂时先不涉及。而如果是只使用单个gpu，那么就通过`Solver`的`Solve()`开始具体的优化过程。在优化结束之后，函数将0值返回给main函数，整个train过程到这里也就结束了：
+
+{% highlight cpp linenos %}
+if (gpus.size() > 1) {
+  caffe::P2PSync<float> sync(solver, NULL, solver->param());
+  sync.run(gpus);
+} else {
+  LOG(INFO) << "Starting Optimization";
+  solver->Solve();
+}
+LOG(INFO) << "Optimization Done.";
+return 0;
+{% endhighlight %}
 
 上面的代码中涉及了很多`Solver`这个类的接口，这些内容都将在下一篇文章中进行具体的分析。
 
-## 4.`SolverParameter`的具体解析过程
+## `SolverParameter`的具体解析过程
