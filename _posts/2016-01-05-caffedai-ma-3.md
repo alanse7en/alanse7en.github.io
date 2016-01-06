@@ -118,7 +118,7 @@ CHECK(!FLAGS_snapshot.size() || !FLAGS_weights.size())
     "but not both.";
 {% endhighlight %}
 
-这段代码的第一行使用了glog的`CHECK_GT`宏（含义为check greater than），检查`FLAGS_solver`的size是否大于0，如果小于或等于0则输出提示："Need a solver definition to train"。`FLAGS_solver`是最开始通过`DEFINE_string`定义的标志，如果我们希望训练一个模型，那么自然应该应该提供对应的solver的路径，这一句话正是在确保我们提供了这样的标志。这样的检查语句在后续的代码中会经常出现，将不再一一详细解释，如果有不清楚含义的glog宏可以去看看<a href=http://google-glog.googlecode.com/svn/trunk/doc/glog.html>文档</a>。
+这段代码的第一行使用了glog的`CHECK_GT`宏（含义为check greater than），检查`FLAGS_solver`的size是否大于0，如果小于或等于0则输出提示："Need a solver definition to train"。`FLAGS_solver`是最开始通过`DEFINE_string`定义的标志，如果我们希望训练一个模型，那么自然应该应该提供对应的solver的路径，这一句话正是在确保我们提供了这样的标志。这样的检查语句在后续的代码中会经常出现，将不再一一详细解释，如果有不清楚含义的glog宏可以去看看<a href="http://google-glog.googlecode.com/svn/trunk/doc/glog.html">文档</a>。
 与第一行代码类似，第二行代码是确保用户没有同时提供snapshot和weights参数，这两个参数都是继续之前的训练或者进行fine-tuning的。
 
 然后出现了`SolverParameter solver_param`的声明和解析的代码：
@@ -128,9 +128,9 @@ caffe::SolverParameter solver_param;
 caffe::ReadSolverParamsFromTextFileOrDie(FLAGS_solver, &solver_param);
 {% endhighlight %}
 
-`SolverParameter`是通过`Google Protocol Buffer`自动生成的一个类，如果有不清楚的可以参考<a href=http://alanse7en.github.io/caffedai-ma-jie-xi-2/>上一篇文章</a>。而具体的解析函数将在下一部分具体解释。
+`SolverParameter`是通过`Google Protocol Buffer`自动生成的一个类，如果有不清楚的可以参考<a href="http://alanse7en.github.io/caffedai-ma-jie-xi-2/">上一篇文章</a>。而具体的解析函数将在下一部分具体解释。
 
-接下来这一部分的代码是根据用户的设置来选择caffe工作的模式（GPU或CPU）以及使用哪些GPU（caffe已经支持了多GPU同时工作！具体使用参考：<a href=http://caffe.berkeleyvision.org/tutorial/interfaces.html>官网tutorial的Parallelism部分</a>）：
+接下来这一部分的代码是根据用户的设置来选择caffe工作的模式（GPU或CPU）以及使用哪些GPU(caffe已经支持了多GPU同时工作！具体使用参考：<a href="http://caffe.berkeleyvision.org/tutorial/interfaces.html">官网tutorial的Parallelism部分</a>)：
 
 {% highlight cpp linenos %}
 // If the gpus flag is not provided, allow the mode and device to be set
