@@ -61,11 +61,11 @@ typedef std::map<caffe::string, BrewFunction> BrewMap;
 BrewMap g_brew_map;
 {% endhighlight %}
 
-`g_brew_map`是一个key为string类型，value为BrewFunction类型的一个全局的map，BrewFunction是一个函数指针类型，指向的是参数为空，返回值为int的函数，也就是train/test/time/device_query这四个函数的类型。在train等四个函数实现的后面都紧跟着这样一句宏的调用：
+`g_brew_map`是一个key为string类型，value为BrewFunction类型的一个全局的map，BrewFunction是一个函数指针类型，指向的是参数为空，返回值为int的函数，也就是train/test/time/device_query这四个函数的类型。在train等四个函数实现的后面都紧跟着这样一句宏的调用：`RegisterBrewFunction(train)`;
+
+其中使用的宏的具体定义为：
 
 {% highlight cpp linenos %}
-RegisterBrewFunction(train);
-// RegisterBrewFunction宏的定义
 #define RegisterBrewFunction(func) \
 namespace { \
 class __Registerer_##func { \
