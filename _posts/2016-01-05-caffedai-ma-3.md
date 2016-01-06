@@ -52,7 +52,7 @@ void GlobalInit(int* pargc, char*** pargv) {
 
 ### Register Brew Function的宏的定义和使用
 
-Caffe在Command Line Interfaces中一共提供了4种commands:train/test/time/device_query，分别对应着四个函数，这四个函数的调用是通过一个叫做`g_brew_map`的全局变量来完成的：
+Caffe在Command Line Interfaces中一共提供了4种功能:train/test/time/device_query，分别对应着四个函数，这四个函数的调用是通过一个叫做`g_brew_map`的全局变量来完成的：
 
 {% highlight cpp linenos %}
 // A simple registry for caffe commands.
