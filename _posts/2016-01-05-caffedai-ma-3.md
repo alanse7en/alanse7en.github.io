@@ -13,12 +13,12 @@ share: true
 
 在上文对Google Protocol Buffer进行了简单的介绍之后，本文将对caffe的Command Line Interfaces进行分析。
 
-本文将主要分为四部分的内容：
+本文将从一个比较宏观的层面上去了解caffe怎么去完成一些初始化的工作和使用`Solver`的接口函数，本文将主要分为四部分的内容：
 
 * Google Flags的使用
 * Register Brew Function的宏的定义和使用
 * `train()`函数的具体实现
-* `SolverParam`的具体解析过程
+* `SolverParameter`的具体解析过程
 
 ## 1.Google Flags的使用
 
@@ -130,7 +130,7 @@ caffe::ReadSolverParamsFromTextFileOrDie(FLAGS_solver, &solver_param);
 
 `SolverParameter`是通过`Google Protocol Buffer`自动生成的一个类，如果有不清楚的可以参考<a href="http://alanse7en.github.io/caffedai-ma-jie-xi-2/">上一篇文章</a>。而具体的解析函数将在下一部分具体解释。
 
-接下来这一部分的代码是根据用户的设置来选择caffe工作的模式（GPU或CPU）以及使用哪些GPU(caffe已经支持了多GPU同时工作！具体使用参考：<a href="http://caffe.berkeleyvision.org/tutorial/interfaces.html">官网tutorial的Parallelism部分</a>)：
+接下来这一部分的代码是根据用户的设置来选择caffe工作的模式（GPU或CPU）以及使用哪些GPU(caffe已经支持了多GPU同时工作！具体参考：<a href="http://caffe.berkeleyvision.org/tutorial/interfaces.html">官网tutorial的Parallelism部分</a>)：
 
 {% highlight cpp linenos %}
 // If the gpus flag is not provided, allow the mode and device to be set
@@ -163,3 +163,36 @@ if (gpus.size() == 0) {
 }
 {% endhighlight %}
 
+首先是判断用户在Command Line中是否输入了gpu相关的参数，如果没有(FLAGS_gpu.size()==0)但是用户在solver的prototxt定义中提供了相关的参数，那就把相关的参数放到FLAGS_gpu中，如果用户仅仅是选择了在solver的prototxt定义中选择了GPU模式，但是没有指明具体的gpu_id，那么就默认设置为0。
+
+接下来的代码则通过一个get_gpus的函数，将存放在FLAGS_gpu中的string转成了一个vector<int>，并完成了具体的设置。
+
+下面的代码声明并通过`SolverRegistry`初始化了一个指向`Solver`类型的shared_ptr。并通过这个shared_ptr指明了在遇到系统中断时的处理方式。
+
+{% highlight cpp linenos %}
+caffe::SignalHandler signal_handler(
+      GetRequestedAction(FLAGS_sigint_effect),
+      GetRequestedAction(FLAGS_sighup_effect));
+
+shared_ptr<caffe::Solver<float> >
+    solver(caffe::SolverRegistry<float>::CreateSolver(solver_param));
+
+solver->SetActionFunction(signal_handler.GetActionFunction());
+{% endhighlight %}
+
+接下来判断了一下用户是否定义了snapshot或者weights这两个参数中的一个，如果定义了则需要通过`Solver`提供的接口从snapshot或者weights文件中去读取已经训练好的网络的参数：
+
+{% highlight cpp linenos %}
+if (FLAGS_snapshot.size()) {
+  LOG(INFO) << "Resuming from " << FLAGS_snapshot;
+  solver->Restore(FLAGS_snapshot.c_str());
+} else if (FLAGS_weights.size()) {
+  CopyLayers(solver.get(), FLAGS_weights);
+}
+{% endhighlight %}
+
+最后，如果用户设置了要使用多个gpu，那么要声明一个`P2PSync`类型的对象，并通过这个对象来完成多gpu的计算，这一部分的代码，这一系列的文章会暂时先不涉及。而如果是只使用单个gpu，那么就通过`Solver`的`Solve()`开始具体的优化过程。在优化结束之后，函数将0值返回给main函数，整个train过程到这里也就结束了。
+
+上面的代码中涉及了很多`Solver`这个类的接口，这些内容都将在下一篇文章中进行具体的分析。
+
+## 4.`SolverParameter`的具体解析过程
