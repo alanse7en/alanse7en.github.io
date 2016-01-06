@@ -101,6 +101,6 @@ static BrewFunction GetBrewFunction(const caffe::string& name) {
 }
 {% endhighlight %}
 
-还是以train函数为例子，如果我们在Command Line中输入了`caffe train <args>`，经过Google Flags的解析argv[1]=train，因此，在GetBrewFunction中会通过`g_brew_map`返回一个指向train函数的函数指针，最后在main函数中就通过这个返回的函数指针完成了对train函数的调用。
+还是以train函数为例子，如果我们在Command Line中输入了`caffe train <args>`，经过Google Flags的解析argv[1]=train，因此，在`GetBrewFunction`中会通过`g_brew_map`返回一个指向train函数的函数指针，最后在main函数中就通过这个返回的函数指针完成了对train函数的调用。
 
 总结一下：`RegisterBrewFunction`这个宏在每一个实现主要功能的函数之后将这个函数的名字和其对应的函数指针添加到了`g_brew_map`中，然后在main函数中，通过`GetBrewFunction`得到了我们需要调用的那个函数的函数指针，并完成了调用。
