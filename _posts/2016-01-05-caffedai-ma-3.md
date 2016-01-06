@@ -78,11 +78,12 @@ __Registerer_##func g_registerer_##func; \
 }
 {% endhighlight %}
 
-以train函数为例子，`RegisterBrewFunction(func)`这个宏的作用是定义了一个名为`__Register_train`的类，在定义完这个类之后，定义了一个这个类的变量，会调用构造函数，这个类的构造函数在前面提到的`g_brew_map`中添加了key为train，value为指向train函数的指针。
+以train函数为例子，`RegisterBrewFunction(train)`这个宏的作用是定义了一个名为`__Register_train`的类，在定义完这个类之后，定义了一个这个类的变量，会调用构造函数，这个类的构造函数在前面提到的`g_brew_map`中添加了key为"train"，value为指向train函数的指针的一个元素。
 
-然后这个函数的调用在`main()`函数中是通过下面的这段代码实现的，在完成初始化(GlobalInit)之后，有这样一句代码：
+然后函数的调用在`main()`函数中是通过下面的这段代码实现的，在完成初始化(GlobalInit)之后，有这样一句代码：
 
 {% highlight cpp linenos %}
+// main()中的调用代码
 return GetBrewFunction(caffe::string(argv[1]))();
 // BrewFunction的具体实现
 static BrewFunction GetBrewFunction(const caffe::string& name) {
