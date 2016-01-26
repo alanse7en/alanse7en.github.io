@@ -37,7 +37,7 @@ caffe.cpp中的train函数中通过上面的代码定义了一个指向`Solver<f
 
 下面我们就来具体看一下`SolverRegistry`这个类的代码，以便理解是如何通过同一个函数得到不同类型的Solver：
 
-{% highlight cpp linenos %}
+{% highlight cpp lineos %}
 class SolverRegistry {
  public:
   typedef Solver<Dtype>* (*Creator)(const SolverParameter&);
@@ -98,7 +98,7 @@ class SolverRegistry {
 
 下面我们具体来看一下Solver的register的过程：
 
-{% highlight cpp linenos %}
+{% highlight cpp lineos %}
 template <typename Dtype>
 class SolverRegisterer {
  public:
