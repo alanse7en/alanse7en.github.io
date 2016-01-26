@@ -33,7 +33,7 @@ DEFINE_string(gpu, "",
     "batch size is multiplied by the number of devices.");
 {% endhighlight %}
 
-这个宏的使用方式为`DEFINE_xxx(name, default_value, instruction);`，这样就定义了一个xxx类型名为FLAGS_name的标志，如果用户没有在Command Line中用户没有提供其值，那么会默认为`default_value`，instruction是这个标志含义的说明。因此，上面的代码定义了一个string类型的名为FLAGS_gpu的标志，如果在Command Line中用户没有提供值，那么会默认为空字符串，根据说明可以得知这个标志是提供给用户来指定caffe将使用的GPU的。其余的定义也是类似的理解方式就不一一列举了。
+这个宏的使用方式为`DEFINE_xxx(name, default_value, instruction);`，这样就定义了一个xxx类型名为FLAGS_name的标志，如果用户没有在Command Line中提供其值，那么会默认为`default_value`，`instruction`是这个标志含义的说明。因此，上面的代码定义了一个string类型的名为FLAGS_gpu的标志，如果在Command Line中用户没有提供值，那么会默认为空字符串，根据说明可以得知这个标志是提供给用户来指定caffe将使用的GPU的。其余的定义也是类似的理解方式就不一一列举了。
 
 解析这些标志的代码在caffe.cpp中的`main()`中调用了/CAFFE_ROOT/src/common.cpp中的`GlobalInit(&argc, &argv)`函数：
 
