@@ -61,7 +61,7 @@ typedef std::map<caffe::string, BrewFunction> BrewMap;
 BrewMap g_brew_map;
 {% endhighlight %}
 
-`g_brew_map`是一个key为string类型，value为BrewFunction类型的一个全局的map，BrewFunction是一个函数指针类型，指向的是参数为空，返回值为int的函数，也就是train/test/time/device_query这四个函数的类型。在train等四个函数实现的后面都紧跟着这样一句宏的调用：`RegisterBrewFunction(train)`;
+`g_brew_map`是一个key为string类型，value为BrewFunction类型的一个map类型的全局变量，BrewFunction是一个函数指针类型，指向的是参数为空，返回值为int的函数，也就是train/test/time/device_query这四个函数的类型。在train等四个函数实现的后面都紧跟着这样一句宏的调用：`RegisterBrewFunction(train)`;
 
 其中使用的宏的具体定义为：
 
@@ -118,8 +118,8 @@ CHECK(!FLAGS_snapshot.size() || !FLAGS_weights.size())
     "but not both.";
 {% endhighlight %}
 
-这段代码的第一行使用了glog的`CHECK_GT`宏（含义为check greater than），检查`FLAGS_solver`的size是否大于0，如果小于或等于0则输出提示："Need a solver definition to train"。`FLAGS_solver`是最开始通过`DEFINE_string`定义的标志，如果我们希望训练一个模型，那么自然应该应该提供对应的solver的路径，这一句话正是在确保我们提供了这样的标志。这样的检查语句在后续的代码中会经常出现，将不再一一详细解释，如果有不清楚含义的glog宏可以去看看<a href="http://google-glog.googlecode.com/svn/trunk/doc/glog.html">文档</a>。
-与第一行代码类似，第二行代码是确保用户没有同时提供snapshot和weights参数，这两个参数都是继续之前的训练或者进行fine-tuning的。
+这段代码的第一行使用了glog的`CHECK_GT`宏（含义为check greater than），检查`FLAGS_solver`的size是否大于0，如果小于或等于0则输出提示："Need a solver definition to train"。`FLAGS_solver`是最开始通过`DEFINE_string`定义的标志，如果我们希望训练一个模型，那么自然应该应该提供对应的solver定义文件的路径，这一句话正是在确保我们提供了这样的路径。这样的检查语句在后续的代码中会经常出现，将不再一一详细解释，如果有不清楚含义的glog宏可以去看看<a href="http://google-glog.googlecode.com/svn/trunk/doc/glog.html">文档</a>。
+与第一行代码类似，第二行代码是确保用户没有同时提供snapshot和weights参数，这两个参数都是继续之前的训练或者进行fine-tuning的，如果同时指明了这两个标志，则不知道到底应该从哪个路径的文件去读入模型的相关参数更为合适。
 
 然后出现了`SolverParameter solver_param`的声明和解析的代码：
 
@@ -167,7 +167,7 @@ if (gpus.size() == 0) {
 
 接下来的代码则通过一个get_gpus的函数，将存放在FLAGS_gpu中的string转成了一个vector<int>，并完成了具体的设置。
 
-下面的代码声明并通过`SolverRegistry`初始化了一个指向`Solver`类型的shared_ptr。并通过这个shared_ptr指明了在遇到系统中断时的处理方式。
+下面的代码声明并通过`SolverRegistry`初始化了一个指向`Solver`类型的shared_ptr。并通过这个shared_ptr指明了在遇到系统信号(用户按了ctrl+c或者关闭了当前的terminal)时的处理方式。
 
 {% highlight cpp linenos %}
 caffe::SignalHandler signal_handler(
