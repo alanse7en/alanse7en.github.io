@@ -37,7 +37,7 @@ caffe.cpp中的train函数中通过上面的代码定义了一个指向`Solver<f
 
 下面我们就来具体看一下`SolverRegistry`这个类的代码，以便理解是如何通过同一个函数得到不同类型的Solver：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 class SolverRegistry {
  public:
   typedef Solver<Dtype>* (*Creator)(const SolverParameter&);
@@ -98,7 +98,7 @@ class SolverRegistry {
 
 下面我们具体来看一下Solver的register的过程：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 template <typename Dtype>
 class SolverRegisterer {
  public:
@@ -135,7 +135,7 @@ Caffe在train或者test的过程中都有可能会遇到系统信号(用户按�
 
 在caffe.cpp中定义了一个GetRequesedAction函数来将设置的string类型的标志转变为枚举类型的变量：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 caffe::SolverAction::Enum GetRequestedAction(
     const std::string& flag_value) {
   if (flag_value == "stop") {
@@ -162,7 +162,7 @@ namespace SolverAction {
 
 其中SolverAction::Enum的定义在solver.hpp中，这是一个定义为枚举类型的数据类型，只有三个可能的值，分别对应了三种处理系统信号的方式：NONE(忽略信号什么都不做)/STOP(停止训练)/SNAPSHOT(保存当前的训练状态，继续训练)。在caffe.cpp中的train函数里Solver设置如何处理系统信号的代码为：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 caffe::SignalHandler signal_handler(
       GetRequestedAction(FLAGS_sigint_effect),
       GetRequestedAction(FLAGS_sighup_effect));
@@ -172,7 +172,7 @@ solver->SetActionFunction(signal_handler.GetActionFunction());
 
 FLAGS_sigint_effect和FLAGS_sighup_effect是通过gflags定义和解析的两个Command Line Interface的输入参数，分别对应遇到sigint和sighup信号的处理方式，如果用户不设定(大部分时候我自己就没设定)，sigint的默认值为"stop"，sighup的默认值为"snapshot"。`GetRequestedAction`函数会将string类型的FLAGS_xx转为SolverAction::Enum类型，并用来定义一个`SignalHandler`类型的对象signal_handler。我们可以看到这部分代码都依赖于`SignalHandler`这个类的接口，我们先来看看这个类都做了些什么：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 // header file
 class SignalHandler {
  public:
@@ -250,7 +250,7 @@ typedef boost::function<SolverAction::Enum()> ActionCallback;
 
 `Solve`函数实现了具体的网络的优化过程，下面我们来具体分析一下这部分的代码，分析见注释：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 void Solver<Dtype>::Solve(const char* resume_file) {
 // 检查当前是否是root_solver(多GPU模式下，只有root_solver才运行这一部分的代码)
   CHECK(Caffe::root_solver());
@@ -294,7 +294,7 @@ void Solver<Dtype>::Solve(const char* resume_file) {
 
 下面继续分析具体的迭代过程发生的`Step`函数：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 template <typename Dtype>
 void Solver<Dtype>::Step(int iters) {
   vector<Blob<Dtype>*> bottom_vec;
@@ -400,7 +400,7 @@ void Solver<Dtype>::Step(int iters) {
 
 每一组网络中的参数的更新都是在不同类型的Solver自己实现的`ApplyUpdate`函数中完成的，下面我们就以最常用的SGD为例子来分析这个函数具体的功能：
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 template <typename Dtype>
 void SGDSolver<Dtype>::ApplyUpdate() {
   CHECK(Caffe::root_solver());
@@ -431,7 +431,7 @@ void SGDSolver<Dtype>::ApplyUpdate() {
 
 #### Normalize
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 template <typename Dtype>
 void SGDSolver<Dtype>::Normalize(int param_id) {
   // 如果iter_size的值为1，则不需要任何处理直接return
@@ -457,7 +457,7 @@ void SGDSolver<Dtype>::Normalize(int param_id) {
 
 #### Regularize
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 template <typename Dtype>
 void SGDSolver<Dtype>::Regularize(int param_id) {
   // 获取所有可以学习的参数的vector
@@ -506,7 +506,7 @@ void SGDSolver<Dtype>::Regularize(int param_id) {
 
 #### ComputeUpdatedValue
 
-{% highlight cpp lineos %}
+{% highlight cpp linenos %}
 template <typename Dtype>
 void SGDSolver<Dtype>::ComputeUpdateValue(int param_id, Dtype rate) {
   // 获取所有可以更新的参数的vector
