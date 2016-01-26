@@ -135,7 +135,7 @@ Caffe在train或者test的过程中都有可能会遇到系统信号(用户按�
 
 在caffe.cpp中定义了一个GetRequesedAction函数来将设置的string类型的标志转变为枚举类型的变量：
 
-{% highlight cpp linenos %}
+{% highlight cpp lineos %}
 caffe::SolverAction::Enum GetRequestedAction(
     const std::string& flag_value) {
   if (flag_value == "stop") {
