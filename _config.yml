@@ -4,15 +4,13 @@ description:      Trying to be a smart one
 disqus_shortname: 'alanse7engithubio'
 reading_time: true
 words_per_minute: 200
-#Your site's domain goes here. Leave localhost server or blank when working locally.
 url:              http://alanse7en.github.io
 
 # Owner/author information
-#share:            true
 owner:
-  name:           Xuesong 
+  name:           Xuesong
   avatar:         avatar-1.jpg
-  bio:            "I'm currently working at BAIDU as a data mining engineer after getting the master degree from <a href = "http://english.ict.cas.cn/">ICT, CAS</a>. Most of the time I work on building personalized recommend system. This blog is where I write about my life not just tech and researches."
+  bio:            "I'm currently working at BAIDU as a data mining engineer after getting the master degree from ICT, CAS. Most of the time I work on building personalized recommend system. This blog is where I write about my life not just tech and researches."
   email:          dxuesong7@gmail.com 
   # Social networking links used in footer. Update and remove as you like.
   twitter:        
