@@ -87,7 +87,7 @@ class SolverRegistry {
 
 首先需要注意的是这个类的构造函数是private的，也就是用我们没有办法去构造一个这个类型的变量，这个类也没有数据成员，所有的成员函数也都是static的，可以直接调用。
 
-我们首先从`CreateSolver`函数(第15行)入手，这个函数先定义了string类型的变量type，表示Solver的类型('SGD'/'Nestrov'等)，然后定义了一个key类型为string，value类型为`Creator`的map：registry，其中`Creator`是一个函数指针类型，指向的函数的参数为`SolverParameter`类型，返回类型为`Solver<Dtype>*`(见第2行和第3行)。如果是一个已经register过的Solver类型，那么`registry.count(type)`应该为1，然后通过registry这个map返回了我们需要类型的Solver的creator，并调用这个creator函数，将creator返回的`Solver<Dtype>*`返回。
+我们首先从 `CreateSolver` 函数(第15行)入手，这个函数先定义了string类型的变量type，表示Solver的类型('SGD'/'Nestrov'等)，然后定义了一个key类型为string，value类型为`Creator`的map：registry，其中`Creator`是一个函数指针类型，指向的函数的参数为`SolverParameter`类型，返回类型为`Solver<Dtype>*`(见第2行和第3行)。如果是一个已经register过的Solver类型，那么`registry.count(type)`应该为1，然后通过registry这个map返回了我们需要类型的Solver的creator，并调用这个creator函数，将creator返回的`Solver<Dtype>*`返回。
 
 上面的代码中，`Registry`这个函数（第5行）中定义了一个static的变量g_registry，这个变量是一个指向`CreatorRegistry`这个map类型的指针，然后直接返回，因为这个变量是static的，所以即使多次调用这个函数，也只会定义一个g_registry，而且在其他地方修改这个map里的内容，是存储在这个map中的。事实上各个Solver的register的过程正是往g_registry指向的那个map里添加以Solver的type为key，对应的Creator函数指针为value的内容。Register的过程如流程图所示：
 
