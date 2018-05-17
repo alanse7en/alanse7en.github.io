@@ -2,7 +2,7 @@
 layout: post
 title: "一个人回家"
 modified: 2014-09-04 18:16:06 +0800
-tags: [music]
+tags: [Music]
 image:
   background: triangular.png 
 comments: true 
